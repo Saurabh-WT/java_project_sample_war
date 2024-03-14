@@ -1,25 +1,31 @@
 pipeline {
     agent any
-    
+    tools {
+        maven 'maven3'
+        jdk 'jdk17'
+        
+    }
     stages {
-        stage('Clone') {
+        stage('Git Checkout') {
             steps {
-                 git branch: "main", url: "https://github.com/danish2109f/my-app.git"
+                git branch: 'main', url: 'https://github.com/danish2109f/java_project_sample_war.git'
+            }
+        }
+    
+     stage('Compile and Build') {
+            steps {
+                sh 'mvn clean install'
             }
         }
         
-        stage('Build') {
+            stage('Deploy to Nexus') {
             steps {
-                sh 'mvn clean package'
-            }
-        }
-        
-        stage('Deploy to Apache Tomcat') {
-            steps {
-                script {
-                 sh "cp target/app.war /home/ubuntu/apache-tomcat-9.0.86/webapps"
+                withMaven(globalMavenSettingsConfig: 'nexus', jdk: '', maven: '', mavenSettingsConfig: '', traceability: true) {
+                    sh "mvn deploy -DskipTests=true"
                 }
             }
         }
-    }
+
 }
+}
+
