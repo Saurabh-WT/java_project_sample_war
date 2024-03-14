@@ -1,0 +1,39 @@
+pipeline
+{
+agent any 
+environment 
+{
+PATH = "$PATH:/usr/share/maven/bin"
+}
+stages
+{
+stage('CHECKOUT')
+{
+steps
+{
+git branch: "main", url: "https://github.com/Saurabh-WT/java_project_sample_war.git"
+}
+}
+stage('build')
+{
+steps
+{
+sh "mvn clean package"
+}
+}
+stage('sonar-analysis')
+{
+steps
+{
+withSonarQubeEnv('Sonarqube-10.0')
+sh """
+mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=newapp \
+  -Dsonar.projectName='newapp' \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.token=sqp_60c32ea0741a4ea454411218d0c36a36975ae32f
+   """
+}
+}
+}
+}
