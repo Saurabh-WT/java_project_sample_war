@@ -28,13 +28,12 @@ pipeline {
                     """
                 }
             }
-            stage('Nexus-artifactory')
-            {
-            steps
-            {
-            withMaven(globalMavenSettingsConfig: 'nexus', jdk: '', maven: '', mavenSettingsConfig: '', traceability: true) {
+        }
+        stage('Nexus-artifactory') {
+            steps {
+                withMaven(globalMavenSettingsConfig: 'nexus', jdk: '', maven: '', mavenSettingsConfig: '', traceability: true) {
                     sh "mvn deploy -DskipTests=true"
-            }
+                }
             }
         }
     }
