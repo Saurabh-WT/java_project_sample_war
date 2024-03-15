@@ -44,7 +44,7 @@ pipeline {
         
         stage('Deployontomcat') {
             steps {
-                sh "cp target/app.war /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps"
+                sh "cp target/app.war /var/lib/jenkins/apache-tomcat-9.0.85/webapps"
             }
         }
         stage("DAST-ZAP") { 
