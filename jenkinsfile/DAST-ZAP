@@ -41,18 +41,17 @@ pipeline {
                 }
             }
         }
-        stage('Source Compilation analysis') {
-            steps {
-                sh "rm owasp* || true"
-                sh "wget 'https://raw.githubusercontent.com/Saurabh-WT/java_project_sample_war/main/owasp-dependency-check.sh'"
-                sh "chmod +x owasp-dependency-check.sh"
-                sh "./owasp-dependency-check.sh"
-                sh "cat OWASP-Dependency-Check/reports/dependency-check-report.xml"
-            }
-        }
+        
         stage('Deployontomcat') {
             steps {
                 sh "cp target/app.war /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps"
+            }
+        }
+        stage("DAST-ZAP") { 
+            steps {
+                sshagent(['zap-ssh']) {
+                    sh 'ssh -o StrictHostKeyChecking=no jenkins@127.0.0.1 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://54.245.203.229:8085/app"'
+                }
             }
         }
     }
