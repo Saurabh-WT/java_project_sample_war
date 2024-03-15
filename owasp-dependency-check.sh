@@ -1,4 +1,3 @@
-
 #!/bin/sh
 
 OWASPDC_DIRECTORY=$HOME/OWASP-Dependency-Check
