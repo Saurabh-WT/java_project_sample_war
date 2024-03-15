@@ -35,13 +35,12 @@ pipeline {
                     sh "mvn deploy -DskipTests=true"
                 }
             }
-         stage('DAST')
-{
-steps
-{
-
-}
-}
+        }
+        stage('Deployontomcat') {
+            steps {
+                sh "cp target/app.war /home/walkingtree/Downloads/apache-tomcat-9.0.85/webapps"
+            }
         }
     }
 }
+
