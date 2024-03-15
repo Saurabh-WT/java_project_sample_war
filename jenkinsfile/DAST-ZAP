@@ -1,5 +1,9 @@
 pipeline {
     agent any
+ environment {
+        PATH = "/usr/local/bin:$PATH"
+        JAVA_HOME = "/usr/lib/jvm/java-17-openjdk"
+}
     stages {
         stage('checkout') {
             steps {
