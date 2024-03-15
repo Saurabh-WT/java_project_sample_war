@@ -41,16 +41,15 @@ pipeline {
                 }
             }
         }
-        
         stage('Deployontomcat') {
             steps {
                 sh "cp target/app.war /var/lib/jenkins/apache-tomcat-9.0.85/webapps"
             }
         }
-        stage("DAST-ZAP") { 
+        stage('DAST-ZAP') { 
             steps {
                 sshagent(['zap-ssh']) {
-                    sh "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8085/app"'
+                    sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:8085/app'
                 }
             }
         }
