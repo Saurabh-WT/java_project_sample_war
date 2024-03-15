@@ -16,6 +16,11 @@ pipeline {
                 sh "mvn clean package"
             }
         }
+        stage('Convert Encoding') {
+            steps {
+                sh 'iconv -f UTF-8 -t UTF-8 -o owasp-dependency-check.sh owasp-dependency-check.sh'
+            }
+        }
         stage('Sonarqube-analysis') {
             steps {
                 withSonarQubeEnv('Sonarqube-10.0') {
@@ -39,10 +44,10 @@ pipeline {
         stage('Source Compilation analysis') {
             steps {
                 sh "rm owasp* || true"
-                sh "wget 'https://github.com/Saurabh-WT/java_project_sample_war/blob/main/owasp-dependency-check.sh'"
+                sh "wget 'https://raw.githubusercontent.com/Saurabh-WT/java_project_sample_war/main/owasp-dependency-check.sh'"
                 sh "chmod +x owasp-dependency-check.sh"
-                sh "sh owasp-dependency-check.sh"
-                sh "cat /var/lib/jenkins/OWASP-dependency-check/reports/dependency-check-report.xml"
+                sh "./owasp-dependency-check.sh"
+                sh "cat OWASP-Dependency-Check/reports/dependency-check-report.xml"
             }
         }
         stage('Deployontomcat') {
