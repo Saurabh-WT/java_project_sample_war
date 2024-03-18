@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    stages {
+   stages {
+   stage("parallel") {
+    parallel {
         stage('checkout') {
             steps {
                 git branch: "main", url: "https://github.com/Saurabh-WT/java_project_sample_war.git"
@@ -65,4 +67,6 @@ pipeline {
             }
         }
     }
+}
+}
 }
