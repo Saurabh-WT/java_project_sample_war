@@ -58,11 +58,11 @@ pipeline {
                     sh 'sleep 30'
 
                     // Perform DAST scan
-                    sh 'zap-cli --zap-url http://localhost:8088 -p 8088 -v spider http://localhost:8088'
-                    sh 'zap-cli --zap-url http://localhost:8088 -p 8088 -v active-scan http://localhost:8088'
+                    sh 'zap-cli --zap-url http://localhost:8080 -p 8080 -v spider http://localhost:8080'
+                    sh 'zap-cli --zap-url http://localhost:8080 -p 8080 -v active-scan http://localhost:8080'
 
                     // Generate ZAP report
-                    sh 'zap-cli --zap-url http://localhost:8088 -p 8088 report -o /path/to/report.html -f html'
+                    sh 'zap-cli --zap-url http://localhost:8080 -p 8080 report -o /path/to/report.html -f html'
                 }
             }
         }
