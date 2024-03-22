@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     // Start ZAP
-                    sh 'zap.sh -daemon -host localhost -port 8088'
+                    sh 'zap.sh -daemon -host localhost -port 8080'
 
                     // Wait for ZAP to start
                     sh 'sleep 30'
